@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Check for Infinity
+        var x = 10; // x is used as the number to check!!!
+        var limit = 10000;
+        var limitCount = 0;
+        var equaleOne = false;
+        var checking = false;
+        var indexIteration = 0;
+        // run program
+        function infinityCheck(myNum) {
+            if (!checking) {
+                // this gaurds against multiple requests
+                checking = true;
+                if (myNum == 1) {
+                    // start over
+                    x = x + 1;
+                    checking = false;
+                    return infinityCheck(x);
+                }
+                if (x < limit) {
+                    // start search
+                    console.log('checking...', myNum);
+                    equaleOne = false;
+                    indexIteration = 0;
+                    var checking = checkNumber(myNum);
+                    x++;
+                } else {
+                    console.log('limit reached, last number checked: ', x);
+                }
+            }
+        }
+
+        function checkNumber(numChk) {
+            limitCount = 0;
+            while (!equaleOne) {
+                // the following commented code will very likely not happen, at least not yet...ahaha...
+                // if (limitCount > limit) {
+                //     console.log('reached limit!!!');
+                //     equaleOne = true;
+                //     return infinityCheck(1); // this triggers new incremented number search
+                // }
+
+                var result = checkOddEven(numChk);
+                indexIteration++;
+                if (result == 1) {
+                    equaleOne = true;
+                    console.log('iterations: ' + indexIteration);
+                    return infinityCheck(1); // this triggers new incremented number search
+                } else {
+                    checkNumber(result);
+                }
+                limitCount++;
+            }
+        }
+        
+        var indexCheck = 0;
+        function checkOddEven(num) {
+            if (indexCheck < 6) { // prints out the first 6 results for integrity check
+                console.log('result: ', num);
+                indexCheck++;
+            }
+
+            if (num % 2 == 0) {
+                // even
+                // if Even divide by 2 (x/2)
+                return num / 2;
+            } else {
+                // odd
+                // if Odd multiply by 3 and add 1 (x*3+1)
+                return num * 3 + 1;
+            }
+        }
+        // To start, uncomment infinityCheck(x) below
+        // infinityCheck(x);
+    </script>
+</body>
+
+</html>
